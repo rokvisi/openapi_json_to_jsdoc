@@ -9,14 +9,9 @@
   "dependencies": {
     "@ts-stack/openapi-spec": "^3.1.5",
     "@types/node": "12.12.11",
-    "clipboardy": "^3.0.0",
-    "copy-to-clipboard": "^3.3.3",
     "json-to-pretty-yaml": "^1.2.2",
     "ts-node": "8.5.2",
     "typescript": "3.7.2"
-  },
-  "devDependencies": {
-    "nodemon": "2.0.0"
   },
   "keywords": []
 }
