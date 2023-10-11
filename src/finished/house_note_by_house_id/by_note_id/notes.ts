@@ -1,10 +1,10 @@
 import { XPathsObject } from "@ts-stack/openapi-spec";
 
-export const get_rooms_by_id: XPathsObject = {
-    "/api/v1/houses/{house_id}/rooms/{room_id}": {
+export const get_house_notes_by_id: XPathsObject = {
+    "/api/v1/houses/{house_id}/notes/{note_id}": {
         get: {
-            description: "Gets a room in a house.",
-            tags: ["Rooms by {house_id}"],
+            description: "Gets a note of a house.",
+            tags: ["House Notes by {house_id}"],
             parameters: [
                 {
                     in: "path",
@@ -17,33 +17,31 @@ export const get_rooms_by_id: XPathsObject = {
                 },
                 {
                     in: "path",
-                    name: "room_id",
+                    name: "note_id",
                     required: true,
                     schema: {
                         type: "integer",
-                        description: "The room ID."
+                        description: "The note ID."
                     }
                 },
             ],
             responses: {
                 "200": {
-                    description: "Gets a room in a house.",
+                    description: "Gets a note of a house.",
                     content: {
                         "application/json": {
                             schema: {
                                 type: "object",
                                 properties: {
                                     id: { type: "number", example: 1 },
-                                    number: { type: "number", example: 1 },
-                                    description: { type: "string", example: "Invoices are included. There is a double bed, wardrobe, desk, chair and lampshade." },
-                                    price: { type: "number", example: 325 },
+                                    note: { type: "string", example: "The front door doesn't work." },
                                 },
                             }
                         }
                     }
                 },
                 "404": {
-                    description: "The room with the specified id does not exist in the house."
+                    description: "The note with the specified id does not exist in the house."
                 },
                 "503": {
                     description: "Sorry, we are currently experiencing technical difficulties. Please try again later."
@@ -53,11 +51,11 @@ export const get_rooms_by_id: XPathsObject = {
     }
 }
 
-export const patch_rooms_by_id: XPathsObject = {
-    "/api/v1/houses/{house_id}/rooms/{room_id}": {
+export const patch_house_notes_by_id: XPathsObject = {
+    "/api/v1/houses/{house_id}/notes/{note_id}": {
         patch: {
-            description: "Updates a room in a house. (requires to be logged-in as a renter)",
-            tags: ["Rooms by {house_id}"],
+            description: "Updates a note of a house. (requires to be logged-in as a renter)",
+            tags: ["House Notes by {house_id}"],
             parameters: [
                 {
                     in: "path",
@@ -70,11 +68,11 @@ export const patch_rooms_by_id: XPathsObject = {
                 },
                 {
                     in: "path",
-                    name: "room_id",
+                    name: "note_id",
                     required: true,
                     schema: {
                         type: "integer",
-                        description: "The room ID."
+                        description: "The note ID."
                     }
                 },
             ],
@@ -83,10 +81,9 @@ export const patch_rooms_by_id: XPathsObject = {
                     "multipart/form-data": {
                         schema: {
                             type: "object",
+                            required: ["note"],
                             properties: {
-                                number: { type: "string", example: "1" },
-                                price: { type: "integer", example: "325" },
-                                description: { type: "string", example: "Invoices are included. There is a double bed, wardrobe, desk, chair and lampshade." },
+                                note: { type: "string", example: "The front door doesn't work." },
                             },
                         },
                     }
@@ -94,7 +91,7 @@ export const patch_rooms_by_id: XPathsObject = {
             },
             responses: {
                 "200": {
-                    description: "Updated a room in a house.",
+                    description: "Updated a note of a house.",
                     content: {
                         "application/json": {
                             schema: {
@@ -112,10 +109,10 @@ export const patch_rooms_by_id: XPathsObject = {
                     description: "The request formData is invalid. Please check your data and try again."
                 },
                 "401": {
-                    description: "User not logged-in or the specified room was created by a different renter."
+                    description: "User not logged-in or the specified note of the house was created by a different renter."
                 },
                 "404": {
-                    description: "The room with the specified id does not exist in the house."
+                    description: "The note with the specified id does not exist in the house."
                 },
                 "503": {
                     description: "Sorry, we are currently experiencing technical difficulties. Please try again later."
@@ -125,11 +122,11 @@ export const patch_rooms_by_id: XPathsObject = {
     }
 }
 
-export const delete_rooms_by_id: XPathsObject = {
-    "/api/v1/houses/{house_id}/rooms/{room_id}": {
+export const delete_house_notes_by_id: XPathsObject = {
+    "/api/v1/houses/{house_id}/notes/{note_id}": {
         delete: {
-            description: "Deletes a room in a house. (requires to be logged-in as a renter)",
-            tags: ["Rooms by {house_id}"],
+            description: "Deletes a note of a house. (requires to be logged-in as a renter)",
+            tags: ["House Notes by {house_id}"],
             parameters: [
                 {
                     in: "path",
@@ -142,33 +139,33 @@ export const delete_rooms_by_id: XPathsObject = {
                 },
                 {
                     in: "path",
-                    name: "room_id",
+                    name: "note_id",
                     required: true,
                     schema: {
                         type: "integer",
-                        description: "The room ID."
+                        description: "The note ID."
                     }
                 },
             ],
             responses: {
                 "200": {
-                    description: "Deleted a room in a house.",
+                    description: "Deleted the note of the house.",
                     content: {
                         "application/json": {
                             schema: {
                                 type: "object",
                                 properties: {
-                                    message: { type: "string", default: "Successfully deleted the room listing." },
+                                    message: { type: "string", default: "Successfully deleted the note of the house." },
                                 },
                             }
                         }
                     }
                 },
                 "401": {
-                    description: "User not logged-in or the specified room was created by a different renter."
+                    description: "User not logged-in or the specified note of the house was created by a different renter."
                 },
                 "404": {
-                    description: "The room with the specified id does not exist in the house."
+                    description: "The note with the specified id does not exist in the house."
                 },
                 "503": {
                     description: "Sorry, we are currently experiencing technical difficulties. Please try again later."

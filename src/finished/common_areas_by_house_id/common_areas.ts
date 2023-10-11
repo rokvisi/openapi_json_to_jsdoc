@@ -1,10 +1,10 @@
 import { XPathsObject } from "@ts-stack/openapi-spec";
 
-export const get_rooms: XPathsObject = {
-    "/api/v1/houses/{house_id}/rooms": {
+export const get_common_areas: XPathsObject = {
+    "/api/v1/houses/{house_id}/common-areas": {
         get: {
-            description: "Gets all rooms in the house.",
-            tags: ["Rooms by {house_id}"],
+            description: "Gets all common areas of the house.",
+            tags: ["Common Areas by {house_id}"],
             parameters: [
                 {
                     in: "path",
@@ -18,7 +18,7 @@ export const get_rooms: XPathsObject = {
                 {
                     in: "query",
                     name: "offset",
-                    description: "The number of rooms to skip.",
+                    description: "The number of notes to skip.",
                     schema: {
                         type: "integer",
                         default: 0
@@ -27,7 +27,7 @@ export const get_rooms: XPathsObject = {
                 {
                     in: "query",
                     name: "limit",
-                    description: "The numbers of rooms to return.",
+                    description: "The numbers of notes to return.",
                     schema: {
                         type: "integer",
                         default: 10
@@ -36,7 +36,7 @@ export const get_rooms: XPathsObject = {
             ],
             responses: {
                 "200": {
-                    description: "Returns a list of rooms in a house.",
+                    description: "Returns a list of common areas in a house.",
                     content: {
                         "application/json": {
                             schema: {
@@ -45,9 +45,7 @@ export const get_rooms: XPathsObject = {
                                     type: "object",
                                     properties: {
                                         id: { type: "number", example: 1 },
-                                        number: { type: "number", example: 1 },
-                                        description: { type: "string", example: "Invoices are included. There is a double bed, wardrobe, desk, chair and lampshade." },
-                                        price: { type: "number", example: 325 },
+                                        name: { type: "string", example: "Kitchen" },
                                     },
                                 }
                             }
@@ -55,7 +53,7 @@ export const get_rooms: XPathsObject = {
                     }
                 },
                 "404": {
-                    description: "The specified house has no rooms."
+                    description: 'The specified house has no common areas.'
                 },
                 "503": {
                     description: "Sorry, we are currently experiencing technical difficulties. Please try again later."
@@ -65,11 +63,11 @@ export const get_rooms: XPathsObject = {
     }
 }
 
-export const post_rooms: XPathsObject = {
-    "/api/v1/houses/{house_id}/rooms": {
+export const post_common_areas: XPathsObject = {
+    "/api/v1/houses/{house_id}/common-areas": {
         post: {
-            description: "Creates a room listing in a house (requires to be logged-in as a renter).",
-            tags: ["Rooms by {house_id}"],
+            description: "Creates a common area for a house.",
+            tags: ["Common Areas by {house_id}"],
             parameters: [
                 {
                     in: "path",
@@ -86,11 +84,9 @@ export const post_rooms: XPathsObject = {
                     "multipart/form-data": {
                         schema: {
                             type: "object",
-                            required: ["number", "price", "description"],
+                            required: ["name"],
                             properties: {
-                                number: { type: "string", example: "1" },
-                                price: { type: "integer", example: "325" },
-                                description: { type: "string", example: "Invoices are included. There is a double bed, wardrobe, desk, chair and lampshade." },
+                                name: { type: "string", example: "Kitchen" },
                             }
                         }
                     }
@@ -98,7 +94,7 @@ export const post_rooms: XPathsObject = {
             },
             responses: {
                 "200": {
-                    description: "Successfully created room listing in the house!",
+                    description: "Successfully created a common area for the house!",
                     content: {
                         "application/json": {
                             schema: {
@@ -120,9 +116,6 @@ export const post_rooms: XPathsObject = {
                 },
                 "404": {
                     description: "The specified house does not exist."
-                },
-                "409": {
-                    description: "The requested room number is already taken. Please choose a different room number."
                 },
                 "503": {
                     description: "Sorry, we are currently experiencing technical difficulties. Please try again later."

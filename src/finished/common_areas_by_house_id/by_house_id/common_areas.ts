@@ -1,10 +1,10 @@
 import { XPathsObject } from "@ts-stack/openapi-spec";
 
-export const get_rooms_by_id: XPathsObject = {
-    "/api/v1/houses/{house_id}/rooms/{room_id}": {
+export const get_common_areas_by_id: XPathsObject = {
+    "/api/v1/houses/{house_id}/common-areas/{area_id}": {
         get: {
-            description: "Gets a room in a house.",
-            tags: ["Rooms by {house_id}"],
+            description: "Gets a common area of a house.",
+            tags: ["Common Areas by {house_id}"],
             parameters: [
                 {
                     in: "path",
@@ -17,33 +17,31 @@ export const get_rooms_by_id: XPathsObject = {
                 },
                 {
                     in: "path",
-                    name: "room_id",
+                    name: "area_id",
                     required: true,
                     schema: {
                         type: "integer",
-                        description: "The room ID."
+                        description: "The common area ID."
                     }
                 },
             ],
             responses: {
                 "200": {
-                    description: "Gets a room in a house.",
+                    description: "Gets a common area of a house.",
                     content: {
                         "application/json": {
                             schema: {
                                 type: "object",
                                 properties: {
                                     id: { type: "number", example: 1 },
-                                    number: { type: "number", example: 1 },
-                                    description: { type: "string", example: "Invoices are included. There is a double bed, wardrobe, desk, chair and lampshade." },
-                                    price: { type: "number", example: 325 },
+                                    name: { type: "string", example: "Kitchen." },
                                 },
                             }
                         }
                     }
                 },
                 "404": {
-                    description: "The room with the specified id does not exist in the house."
+                    description: "The common area with the specified id does not exist in the house."
                 },
                 "503": {
                     description: "Sorry, we are currently experiencing technical difficulties. Please try again later."
@@ -53,11 +51,11 @@ export const get_rooms_by_id: XPathsObject = {
     }
 }
 
-export const patch_rooms_by_id: XPathsObject = {
-    "/api/v1/houses/{house_id}/rooms/{room_id}": {
+export const patch_common_areas_by_id: XPathsObject = {
+    "/api/v1/houses/{house_id}/common-areas/{area_id}": {
         patch: {
-            description: "Updates a room in a house. (requires to be logged-in as a renter)",
-            tags: ["Rooms by {house_id}"],
+            description: "Updates a common area of a house. (requires to be logged-in as a renter)",
+            tags: ["Common Areas by {house_id}"],
             parameters: [
                 {
                     in: "path",
@@ -70,11 +68,11 @@ export const patch_rooms_by_id: XPathsObject = {
                 },
                 {
                     in: "path",
-                    name: "room_id",
+                    name: "area_id",
                     required: true,
                     schema: {
                         type: "integer",
-                        description: "The room ID."
+                        description: "The common area ID."
                     }
                 },
             ],
@@ -83,10 +81,9 @@ export const patch_rooms_by_id: XPathsObject = {
                     "multipart/form-data": {
                         schema: {
                             type: "object",
+                            required: ["name"],
                             properties: {
-                                number: { type: "string", example: "1" },
-                                price: { type: "integer", example: "325" },
-                                description: { type: "string", example: "Invoices are included. There is a double bed, wardrobe, desk, chair and lampshade." },
+                                name: { type: "string", example: "Kitchen." },
                             },
                         },
                     }
@@ -94,7 +91,7 @@ export const patch_rooms_by_id: XPathsObject = {
             },
             responses: {
                 "200": {
-                    description: "Updated a room in a house.",
+                    description: "Updated a common area of a house.",
                     content: {
                         "application/json": {
                             schema: {
@@ -112,10 +109,10 @@ export const patch_rooms_by_id: XPathsObject = {
                     description: "The request formData is invalid. Please check your data and try again."
                 },
                 "401": {
-                    description: "User not logged-in or the specified room was created by a different renter."
+                    description: "User not logged-in or the specified common area of the house was created by a different renter."
                 },
                 "404": {
-                    description: "The room with the specified id does not exist in the house."
+                    description: "The common area with the specified id does not exist in the house."
                 },
                 "503": {
                     description: "Sorry, we are currently experiencing technical difficulties. Please try again later."
@@ -125,11 +122,11 @@ export const patch_rooms_by_id: XPathsObject = {
     }
 }
 
-export const delete_rooms_by_id: XPathsObject = {
-    "/api/v1/houses/{house_id}/rooms/{room_id}": {
+export const delete_common_areas_by_id: XPathsObject = {
+    "/api/v1/houses/{house_id}/common-areas/{area_id}": {
         delete: {
-            description: "Deletes a room in a house. (requires to be logged-in as a renter)",
-            tags: ["Rooms by {house_id}"],
+            description: "Deletes a common area of a house. (requires to be logged-in as a renter)",
+            tags: ["Common Areas by {house_id}"],
             parameters: [
                 {
                     in: "path",
@@ -142,33 +139,33 @@ export const delete_rooms_by_id: XPathsObject = {
                 },
                 {
                     in: "path",
-                    name: "room_id",
+                    name: "area_id",
                     required: true,
                     schema: {
                         type: "integer",
-                        description: "The room ID."
+                        description: "The common area ID."
                     }
                 },
             ],
             responses: {
                 "200": {
-                    description: "Deleted a room in a house.",
+                    description: "Deleted the common area of the house.",
                     content: {
                         "application/json": {
                             schema: {
                                 type: "object",
                                 properties: {
-                                    message: { type: "string", default: "Successfully deleted the room listing." },
+                                    message: { type: "string", default: "Successfully deleted the common area of the house." },
                                 },
                             }
                         }
                     }
                 },
                 "401": {
-                    description: "User not logged-in or the specified room was created by a different renter."
+                    description: "User not logged-in or the specified common area of the house was created by a different renter."
                 },
                 "404": {
-                    description: "The room with the specified id does not exist in the house."
+                    description: "The common area with the specified id does not exist in the house."
                 },
                 "503": {
                     description: "Sorry, we are currently experiencing technical difficulties. Please try again later."
